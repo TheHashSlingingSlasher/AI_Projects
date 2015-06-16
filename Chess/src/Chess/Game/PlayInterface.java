@@ -17,12 +17,6 @@ import javax.swing.border.Border;
 import java.util.ArrayList;
 import java.awt.BorderLayout;
 import Chess.GamePiece.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-
 
 public class PlayInterface extends JFrame implements ActionListener {
     private static GameStateSerializable record = new GameStateSerializable();
@@ -35,12 +29,6 @@ public class PlayInterface extends JFrame implements ActionListener {
     
     public static Player_Info player1;
     public static Player_Info player2;
-    
-    //Mysql variables 
-  
-    Connection connect = null;
-    PreparedStatement  states  = null;
-    ResultSet  results = null;
     
     
     public PlayInterface(Player_Info player1, Player_Info player2,int game_choice) {
@@ -551,33 +539,6 @@ public class PlayInterface extends JFrame implements ActionListener {
                 }
             }
             if(game.get_winner()==true){
-             // Send Win or Loss to Database
-         /*
-            try{
-            
-            //String mysqlQuery = "INSERT INTO results(wins,losses)" + "values(1,0) + FROM users, results, useres_xref " + 
-            //         "WHERE user_id = useres_xref.user_id" + "AND results.id = useres_xref.results_id";
-            
-           // states = connect.prepareStatement(mysqlQuery);
-           // states.setString(1,player1.get_username());
-           //  states.setString(2,player1.get_password());
-           //states.setInt(3,player1.get_id());
-           // int i = states.executeUpdate();
-            
-            
-           // if(i>0){
-          //  JOptionPane.showMessageDialog(null, " Database updated successfully");
-            
-            
-            } else{
-                JOptionPane.showMessageDialog(null, "Oops! There was a problem with the Registration");
-            }
-            
-        }catch(SQLException | HeadlessException Ex){
-            
-            JOptionPane.showMessageDialog(null, e);
-        }
-           */     
                 
                 if(game.get_player_turn())
                     thread.setWinner(1);   
@@ -753,33 +714,7 @@ public class PlayInterface extends JFrame implements ActionListener {
         }
         }
         if(game.get_winner()==true){
-            // Send Win or Loss to Database
-         /*
-            try{
-            
-            //String mysqlQuery = "INSERT INTO results(wins,losses)" + "values(1,0) + FROM users, results, useres_xref " + 
-            //         "WHERE user_id = useres_xref.user_id" + "AND results.id = useres_xref.results_id";
-            
-           // states = connect.prepareStatement(mysqlQuery);
-           // states.setString(1,player1.get_username());
-           //  states.setString(2,player1.get_password());
-           //states.setInt(3,player1.get_id());
-           // int i = states.executeUpdate();
-            
-            
-           // if(i>0){
-          //  JOptionPane.showMessageDialog(null, " Database updated successfully");
-            
-            
-            } else{
-                JOptionPane.showMessageDialog(null, "Oops! There was a problem with the Registration");
-            }
-            
-        }catch(SQLException | HeadlessException Ex){
-            
-            JOptionPane.showMessageDialog(null, e);
-        }
-           */ 
+           
             if(game.get_player_turn())
                 thread.setWinner(1);   
             else 

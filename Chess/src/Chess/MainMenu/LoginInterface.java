@@ -10,10 +10,6 @@ package Chess.MainMenu;
 import Chess.Game.*;
 import java.awt.Color;
 import java.awt.HeadlessException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -27,14 +23,6 @@ public class LoginInterface extends javax.swing.JFrame {
     public Player_Info player1;
     public Player_Info player2;
     public int game_choice;
-    
-    
-    
-    //Mysql variables 
-  
-    Connection connect = null;
-    PreparedStatement  states  = null;
-    ResultSet  results = null;
     
     /**
      * Creates new form LoginUI
@@ -359,9 +347,8 @@ public class LoginInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.setVisible(false);
         //System.exit(0);
-        StartInterface mainMenu = new StartInterface();
-        mainMenu.setLocationRelativeTo(null);
-        mainMenu.setVisible(true);
+        SplashScreen splash = new SplashScreen();
+        splash.setVisible(true);
     }//GEN-LAST:event_returnLabelMouseClicked
 
     private void returnLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_returnLabelMouseEntered
@@ -384,86 +371,6 @@ public class LoginInterface extends javax.swing.JFrame {
         if( registerDialog.isEnabled() );
             reset();
     }//GEN-LAST:event_registerButtonActionPerformed
-
-    private void registerCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerCancelButtonActionPerformed
-        // TODO add your handling code here:
-        registerDialog.setVisible(false);
-    }//GEN-LAST:event_registerCancelButtonActionPerformed
-
-    private void registerButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButton2ActionPerformed
-      // String to be scanned to find the pattern.
-      String username = registerUnameTextField.getText();
-      String pw = "",
-              pwConfirm = "";
-      
-      // getPassword() returns char[]
-      char[] ch = registerPWField.getPassword(),
-              ch2 = registerConfirmPWField.getPassword();
-      
-      // append each char in char[] to string
-      for(int i = 0; i < ch.length; ++i) 
-           pw += ("" + ch[i]);
-      
-       for(int i = 0; i < ch2.length; ++i) 
-           pwConfirm += ("" + ch2[i]);
-      
-       // patterns
-      String pattern = "^[a-zA-Z0-9]{3,35}$"; // username
-      String pattern2 = "^[a-zA-Z0-9!@#$%^&*]{8,35}$"; // password
-
-      // Create a Pattern object
-      r = Pattern.compile(pattern);
-      r2 = Pattern.compile(pattern2);
-      // Now create matcher object.
-      m = r.matcher(username);
-      m2 = r2.matcher(pw);
-      
-      if(m.find() && m2.find() && (pw.equals(pwConfirm))){
-          System.out.println("true");       
-          
-      String regusername = registerUnameTextField.getText();
-      String regpassword = String.valueOf(registerConfirmPWField.getPassword());
-        
-        try{
-            String mysqlQuery = "INSERT INTO users(username,password)" + "values(?,?)";
-            states = connect.prepareStatement(mysqlQuery);
-            states.setString(1,regusername);
-            states.setString(2,regpassword);
-            int i = states.executeUpdate();
-            
-            
-            if(i>0){
-            JOptionPane.showMessageDialog(null, "Sign Up Success! ");
-            
-            
-            } else{
-                JOptionPane.showMessageDialog(null, "Oops! There was a problem with the Registration");
-            }
-            
-        }catch(SQLException | HeadlessException e){
-            
-            JOptionPane.showMessageDialog(null, e);
-        }
-          
-          registerDialog.setVisible(false);
-      } else {
-          System.out.println("false"); 
-          //if username field is empty
-          if(registerUnameTextField.getText().equals("enter username") ||
-                  registerUnameTextField.getText().length() == 0) {
-              JOptionPane.showMessageDialog(null, "Enter username!");
-          }
-          // if pw and pwConfirm is not matched
-          else if(!pw.equals(pwConfirm)) {
-              JOptionPane.showMessageDialog(null, "Password not matched!");
-          }
-          // if username or pw failed passing regex test
-          else {
-              JOptionPane.showMessageDialog(null, "Username: 3-35 characters.\n"
-                      + "Password: 8-35 characters.");
-          }     
-      }
-    }//GEN-LAST:event_registerButton2ActionPerformed
 
     private void loginGuestButttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginGuestButttonActionPerformed
         if(choice1.getSelectedItem().equals("Player 1")) {
@@ -499,51 +406,7 @@ public class LoginInterface extends javax.swing.JFrame {
         String getusername = usernameTextField.getText();
         String getpassword = String.valueOf(userPasswordField.getPassword());
         //int getid = 0;
-        try{
-            String mysqlQuery = "SELECT * FROM users WHERE username = ? AND password = ?";
-            //String mysqlQuery = "SELECT * FROM users WHERE username = ? AND password = ? AND id =?;";
-            states = connect.prepareStatement(mysqlQuery);
-            states.setString(1,getusername);
-            states.setString(2,getpassword);
-            //states.setInt(3, getid);
-            results = states.executeQuery();
-          
-            
-            if (results.next()){
-       
-                 String getid = results.getString("id");
-                 if(choice1.getSelectedItem().equals("Player 1")){
-                  p1UserName.setText(getusername);
-                  player1.set_username(getusername);
-                  player1.set_password(getpassword);
-                  int getID = Integer.parseInt(getid);
-                  player1.set_id(getID);
-                 //JOptionPane.showMessageDialog(null, getUsernameStored);
-                  JOptionPane.showMessageDialog(null, "Login Successful!");
-                 
-                 //JOptionPane.showMessageDialog(null, getID);
-                 }else if(choice1.getSelectedItem().equals("Player 2")){
-                     int getID = Integer.parseInt(getid);
-                     player2.set_id(getID);
-                     player2.set_username(getusername);
-                     player2.set_password(getpassword);
-                  
-                     JOptionPane.showMessageDialog(null, getID);
-                     
-                    // JOptionPane.showMessageDialog(null, getUsernameStored2);
-                   p2UserName.setText(getusername);
-                    JOptionPane.showMessageDialog(null, "Login Successful!");
-         }
-            }
-       
-            else{  JOptionPane.showMessageDialog(null, "Login Failed, Please Try Again");}
-   
-        }catch(SQLException | HeadlessException e){    
-            JOptionPane.showMessageDialog(null, e);
-        }
         
-        // if username and pw failed to pass regex test
-        // show error (chekc database later on)
          if(m.find() && m2.find()) {
               if(choice1.getSelectedItem().equals("Player 1"))
                   p1UserName.setText(getusername);
@@ -559,11 +422,6 @@ public class LoginInterface extends javax.swing.JFrame {
         usernameTextField.setForeground(Color.BLACK);
     }//GEN-LAST:event_usernameTextFieldMouseClicked
 
-    private void registerUnameTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerUnameTextFieldMouseClicked
-        registerUnameTextField.setText("");
-        registerUnameTextField.setForeground(Color.BLACK);
-    }//GEN-LAST:event_registerUnameTextFieldMouseClicked
-
     private void startGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startGameButtonActionPerformed
         if(p1UserName.getText().length() == 0 || 
                 p2UserName.getText().length() == 0) {
@@ -576,8 +434,7 @@ public class LoginInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_startGameButtonActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        // Connect to Database as soon as its opened. 
-        connect = MysqlConnection.connectMysql();
+
         if(onePlayer == true) {
              choice1.add("Player 1");
              p2UserName.setText("Computer");
@@ -587,11 +444,76 @@ public class LoginInterface extends javax.swing.JFrame {
              choice1.add("Player 2");
              
         }
+        
     }//GEN-LAST:event_formWindowActivated
 
     private void formWindowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeactivated
         choice1.removeAll();
     }//GEN-LAST:event_formWindowDeactivated
+
+    private void registerCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerCancelButtonActionPerformed
+        // TODO add your handling code here:
+        registerDialog.setVisible(false);
+    }//GEN-LAST:event_registerCancelButtonActionPerformed
+
+    private void registerButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButton2ActionPerformed
+        // String to be scanned to find the pattern.
+        String username = registerUnameTextField.getText();
+        String pw = "",
+        pwConfirm = "";
+
+        // getPassword() returns char[]
+        char[] ch = registerPWField.getPassword(),
+        ch2 = registerConfirmPWField.getPassword();
+
+        // append each char in char[] to string
+        for(int i = 0; i < ch.length; ++i)
+        pw += ("" + ch[i]);
+
+        for(int i = 0; i < ch2.length; ++i)
+        pwConfirm += ("" + ch2[i]);
+
+        // patterns
+        String pattern = "^[a-zA-Z0-9]{3,35}$"; // username
+        String pattern2 = "^[a-zA-Z0-9!@#$%^&*]{8,35}$"; // password
+
+        // Create a Pattern object
+        r = Pattern.compile(pattern);
+        r2 = Pattern.compile(pattern2);
+        // Now create matcher object.
+        m = r.matcher(username);
+        m2 = r2.matcher(pw);
+
+        if(m.find() && m2.find() && (pw.equals(pwConfirm))){
+            System.out.println("true");
+
+            String regusername = registerUnameTextField.getText();
+            String regpassword = String.valueOf(registerConfirmPWField.getPassword());
+
+            registerDialog.setVisible(false);
+        } else {
+            System.out.println("false");
+            //if username field is empty
+            if(registerUnameTextField.getText().equals("enter username") ||
+                registerUnameTextField.getText().length() == 0) {
+                JOptionPane.showMessageDialog(null, "Enter username!");
+            }
+            // if pw and pwConfirm is not matched
+            else if(!pw.equals(pwConfirm)) {
+                JOptionPane.showMessageDialog(null, "Password not matched!");
+            }
+            // if username or pw failed passing regex test
+            else {
+                JOptionPane.showMessageDialog(null, "Username: 3-35 characters.\n"
+                    + "Password: 8-35 characters.");
+            }
+        }
+    }//GEN-LAST:event_registerButton2ActionPerformed
+
+    private void registerUnameTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerUnameTextFieldMouseClicked
+        registerUnameTextField.setText("");
+        registerUnameTextField.setForeground(Color.BLACK);
+    }//GEN-LAST:event_registerUnameTextFieldMouseClicked
 
     // reset register field
     private void reset() {

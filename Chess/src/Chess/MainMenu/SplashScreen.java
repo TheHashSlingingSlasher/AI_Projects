@@ -56,9 +56,70 @@ public class SplashScreen extends JPanel{
                 public void keyPressed(KeyEvent ke) {
                 cnt ++;
                 if (ke.getKeyCode() == KeyEvent.VK_ENTER && cnt == 1) {
-                    StartInterface screen = new StartInterface();
-                    screen.setVisible(true);
-                    screen.setLocationRelativeTo(null);
+                    //StartInterface screen = new StartInterface();
+                    //LoginInterface screen = new LoginInterface();
+                    JDialog select_game = new JDialog();
+                    select_game.setLayout(new FlowLayout());
+                    select_game.setTitle("Select Gametype");
+                    select_game.setMinimumSize(new java.awt.Dimension(420, 220));
+                    select_game.setPreferredSize(new java.awt.Dimension(420, 220));
+                    select_game.setResizable(false);
+                    
+                    JLabel pvp_label = new JLabel();
+                    JLabel pvc_label = new JLabel();
+                    pvp_label.setText("Player vs Player");
+                    pvp_label.setFont(new Font("Arial",Font.ITALIC,26));
+                    pvc_label.setText("Player vs Computer");
+                    pvc_label.setFont(new Font("sans-serif",Font.ITALIC,26));
+                    
+                    
+                    final JButton pvp = new JButton();
+                    final JButton pvc = new JButton();
+                    pvp.addMouseListener(new java.awt.event.MouseAdapter() {
+                    public void mouseEntered(java.awt.event.MouseEvent evt) {
+                        pvp.setForeground(new Color(109,53,26));
+                    }
+                    public void mouseExited(java.awt.event.MouseEvent evt) {
+                        pvp.setForeground(Color.BLACK);
+                    }
+                    });
+                    pvp.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            LoginInterface login = new LoginInterface(0);
+                            login.isOnePlayer(false);
+                            login.setLocationRelativeTo(null);
+                            login.setVisible(true);
+                        }
+                    });
+                    
+                    pvc.addMouseListener(new java.awt.event.MouseAdapter() {
+                    public void mouseEntered(java.awt.event.MouseEvent evt) {
+                        pvc.setForeground(new Color(109,53,26));
+                    }
+                    public void mouseExited(java.awt.event.MouseEvent evt) {
+                        pvc.setForeground(Color.BLACK);
+                    }
+                    });
+                    pvc.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            LoginInterface login = new LoginInterface(1);
+                            login.isOnePlayer(true);
+                            login.setLocationRelativeTo(null);
+                            login.setVisible(true);
+                        }
+                    });
+                    
+                    
+                    pvp.add(pvp_label);
+                    pvc.add(pvc_label);
+                    
+                    pvp.setPreferredSize(new java.awt.Dimension(400,75));
+                    pvc.setPreferredSize(new java.awt.Dimension(400,75));
+                    select_game.add(pvp);
+                    select_game.add(pvc);
+                    select_game.setVisible(true);
+                    select_game.setLocationRelativeTo(null);
+                    
                 } else if (ke.getKeyCode() == KeyEvent.VK_ESCAPE)
                     System.exit(0);
             }

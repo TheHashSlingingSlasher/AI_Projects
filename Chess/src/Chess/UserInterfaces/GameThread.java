@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package Chess.Game;
+package Chess.UserInterfaces;
 
 /**
  *

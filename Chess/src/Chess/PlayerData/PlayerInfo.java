@@ -4,13 +4,13 @@
  * and open the template in the editor.
  */
 
-package Chess.Game;
+package Chess.PlayerData;
 
 /**
  *
  * @author Alec
  */
-public class Player_Info {
+public class PlayerInfo {
  
     // Data members
     private String username;

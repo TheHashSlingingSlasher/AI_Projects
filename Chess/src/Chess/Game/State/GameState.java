@@ -4,7 +4,7 @@
  * Purpose: Chess GameState Class
  */
 
-package Chess.Game;
+package Chess.Game.State;
 
 import javax.swing.JButton;
 import java.util.ArrayList;

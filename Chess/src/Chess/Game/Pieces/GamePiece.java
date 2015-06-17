@@ -4,9 +4,10 @@
  * Purpose: Chess GamePiece Class
  */
 
-package Chess.Game;
+package Chess.Game.Pieces;
 
 // Import libraries
+import Chess.Game.State.GameState;
 import java.awt.Color;
 import javax.swing.JButton;
 import java.util.ArrayList;

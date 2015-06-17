@@ -4,10 +4,12 @@
  * Purpose: Chess Splash Page
  */
 
-package Chess.MainMenu;
+package Chess.UserInterfaces;
 
 // Import libraries
-import Chess.Serializable.*;
+import Chess.PlayerData.GameStateSerializable;
+import Chess.PlayerData.ReadDataFile;
+import Chess.PlayerData.CreateDataFile;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;

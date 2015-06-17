@@ -7,11 +7,16 @@
 package Chess.AI;
 
 // Import libraries
+import Chess.Game.Pieces.Bishop;
+import Chess.Game.Pieces.Queen;
+import Chess.Game.Pieces.Rook;
+import Chess.Game.Pieces.Knight;
+import Chess.Game.Pieces.Pawn;
+import Chess.Game.Pieces.King;
+import Chess.Game.State.GameState;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import java.awt.Color;
-import Chess.Game.*;
-import Chess.GamePiece.*;
 
 /**
  *

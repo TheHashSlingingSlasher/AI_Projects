@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 
-package Chess.GamePiece;
+package Chess.Game.Pieces;
 
+import Chess.Game.State.GameState;
 import java.awt.Color;
 import java.util.ArrayList;
-import Chess.Game.*;
 
 public class Bishop extends GamePiece{
     

@@ -4,10 +4,10 @@
  * Purpose: Chess LoginUI Class
  */
 
-package Chess.MainMenu;
+package Chess.UserInterfaces;
 
 // Import libraries
-import Chess.Game.*;
+import Chess.PlayerData.PlayerInfo;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.util.regex.Matcher;
@@ -20,8 +20,8 @@ public class LoginInterface extends javax.swing.JFrame {
     private static boolean onePlayer;
     private Pattern r,r2;
     private Matcher m,m2;
-    public Player_Info player1;
-    public Player_Info player2;
+    public PlayerInfo player1;
+    public PlayerInfo player2;
     public int game_choice;
     
     /**
@@ -29,8 +29,8 @@ public class LoginInterface extends javax.swing.JFrame {
      */
     public LoginInterface(int game_choice) {
         initComponents();
-        player1 = new Player_Info();
-        player2 = new Player_Info();
+        player1 = new PlayerInfo();
+        player2 = new PlayerInfo();
         this.game_choice = game_choice;
     }
 

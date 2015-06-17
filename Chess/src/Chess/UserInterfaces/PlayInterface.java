@@ -4,11 +4,20 @@
  * Purpose: Chess UI
  */
 
-package Chess.Game;
+package Chess.UserInterfaces;
 
 // Import libraries
+import Chess.Game.Pieces.Bishop;
+import Chess.Game.Pieces.Queen;
+import Chess.Game.Pieces.Rook;
+import Chess.Game.Pieces.Knight;
+import Chess.Game.Pieces.Pawn;
+import Chess.Game.Pieces.King;
+import Chess.PlayerData.GameStateSerializable;
+import Chess.PlayerData.CreateDataFile;
 import Chess.AI.Game_Tree;
-import Chess.Serializable.*;
+import Chess.Game.State.GameState;
+import Chess.PlayerData.PlayerInfo;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -16,7 +25,6 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.util.ArrayList;
 import java.awt.BorderLayout;
-import Chess.GamePiece.*;
 
 public class PlayInterface extends JFrame implements ActionListener {
     private static GameStateSerializable record = new GameStateSerializable();
@@ -27,11 +35,11 @@ public class PlayInterface extends JFrame implements ActionListener {
     GameState game;
     static int game_choice;
     
-    public static Player_Info player1;
-    public static Player_Info player2;
+    public static PlayerInfo player1;
+    public static PlayerInfo player2;
     
     
-    public PlayInterface(Player_Info player1, Player_Info player2,int game_choice) {
+    public PlayInterface(PlayerInfo player1, PlayerInfo player2,int game_choice) {
         game = new GameState();
         this.game_choice = game_choice;
         thread = new GameThread(this);
@@ -89,7 +97,6 @@ public class PlayInterface extends JFrame implements ActionListener {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
         setMinimumSize(new java.awt.Dimension(950, 590));
-        setPreferredSize(new java.awt.Dimension(950, 590));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
